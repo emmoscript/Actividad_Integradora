@@ -5,9 +5,9 @@
 [![Apache Spark](https://img.shields.io/badge/Apache%20Spark-RDD%20%7C%20DataFrame-red.svg)](https://spark.apache.org/)
 [![Serverless](https://img.shields.io/badge/Architecture-Serverless-green.svg)](https://serverless.com/)
 
-> **Hybrid Big Data Processing Application in Serverless Environment**
-> 
-> A complete Big Data processing system combining **GPU acceleration**, **Apache Spark**, **Actor Model**, and **serverless architecture** on AWS, demonstrating advanced parallel and distributed programming competencies.
+**Hybrid Big Data Processing Application in Serverless Environment**
+
+A complete Big Data processing system combining **GPU acceleration**, **Apache Spark**, **Actor Model**, and **serverless architecture** on AWS, demonstrating advanced parallel and distributed programming competencies.
 
 ## 📋 Table of Contents
 
@@ -21,7 +21,6 @@
 - [Testing](#testing)
 - [Troubleshooting](#troubleshooting)
 - [Academic Value](#academic-value)
-- [Contributing](#contributing)
 
 ## 🎯 Overview
 
@@ -45,24 +44,29 @@ This project implements a comprehensive Big Data processing system that showcase
 
 ### System Architecture Diagram
 
-```mermaid
-graph TB
-    API[API Gateway<br/>HTTP API] --> LR[Lambda Router<br/>Orchestrator]
-    LR --> AS[Actor System<br/>Thespian]
-    
-    AS --> VA[Validation<br/>Actor]
-    AS --> JM[Job Manager<br/>Actor]
-    AS --> AA[Analysis<br/>Actor]
-    
-    VA --> GPU[GPU Processing<br/>Lambda]
-    JM --> SPK[Spark Launcher<br/>Lambda]
-    
-    GPU --> CUDA[CUDA/OpenMP<br/>Processing]
-    SPK --> SC[Spark Cluster<br/>RDD/DataFrame]
-    
-    AA --> S3[(S3 Storage<br/>Results)]
-    SC --> S3
-    CUDA --> S3
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   API Gateway   │───▶│  Lambda Router  │───▶│  Actor System   │
+│   (HTTP API)    │    │   (Orchestrator)│    │   (Thespian)    │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                                │
+                                ▼
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│  GPU Processing │◀───│  Lambda GPU     │◀───│  Validation     │
+│  (CUDA/OpenMP)  │    │  Microservice   │    │  Actor          │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                                │
+                                ▼
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│  Spark Cluster  │◀───│  Lambda Spark   │◀───│  Job Manager    │
+│  (RDD/DataFrame)│    │  Launcher       │    │  Actor          │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+                                │
+                                ▼
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│  S3 Storage     │◀───│  Result         │◀───│  Analysis       │
+│  (Results)      │    │  Collector      │    │  Actor          │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
 ### Core Components
@@ -82,19 +86,19 @@ graph TB
 
 ## ⚡ Features
 
-### 🚀 **High-Performance Processing**
+### 🚀 High-Performance Processing
 - **GPU Acceleration**: CUDA simulation with CuPy for massive parallel processing
 - **Spark Integration**: Both RDD and DataFrame pipelines for optimal performance
 - **Actor Model**: Distributed coordination using Thespian framework
 - **Auto-scaling**: Serverless architecture with automatic resource allocation
 
-### 📊 **Advanced Analytics**
+### 📊 Advanced Analytics
 - **Performance Benchmarking**: Real-time throughput and latency metrics
 - **Cost Analysis**: Detailed cost-per-record calculations
 - **Speedup Comparison**: RDD vs DataFrame performance analysis
 - **Quality Metrics**: Data validation and processing quality indicators
 
-### 🔧 **Production-Ready Features**
+### 🔧 Production-Ready Features
 - **Error Handling**: Comprehensive retry logic and fallback mechanisms
 - **Monitoring**: CloudWatch integration for logs and metrics
 - **Infrastructure as Code**: Terraform deployment automation
@@ -137,25 +141,25 @@ graph TB
 ### Quick Installation
 
 1. **Clone the repository**
-   ```bash
-   git clone <your-repo-url>
-   cd bigdata-serverless
-   ```
+```bash
+git clone <your-repo-url>
+cd bigdata-serverless
+```
 
 2. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+pip install -r requirements.txt
+```
 
 3. **Configure AWS credentials**
-   ```bash
-   aws configure
-   ```
+```bash
+aws configure
+```
 
 4. **Run quick test**
-   ```bash
-   python scripts/quick_test.py
-   ```
+```bash
+python scripts/quick_test.py
+```
 
 ### Expected Output
 
@@ -210,17 +214,17 @@ print(f"Records Processed: {result['records_processed']}")
 
 ### Advanced Features
 
-#### 1. **Performance Benchmarking**
+#### 1. Performance Benchmarking
 ```bash
 python examples/demo_usage.py
 ```
 
-#### 2. **Scalability Testing**
+#### 2. Scalability Testing
 ```bash
 python examples/scalability_test.py
 ```
 
-#### 3. **Cost Analysis**
+#### 3. Cost Analysis
 ```bash
 python scripts/generate_report.py
 ```
@@ -228,34 +232,34 @@ python scripts/generate_report.py
 ## 📁 Project Structure
 
 ```
-📦 bigdata-serverless/
-├── 📄 README.md                     # This file
-├── 📄 requirements.txt              # Python dependencies
-├── 📂 src/
-│   ├── 📂 actors/                   # Actor system (Thespian)
-│   │   ├── 🐍 base_actor.py
-│   │   ├── 🐍 validation_actor.py
-│   │   ├── 🐍 job_manager_actor.py
-│   │   └── 🐍 analysis_actor.py
-│   ├── 📂 lambda_functions/         # AWS Lambda functions
-│   │   ├── 📂 orchestrator/
-│   │   ├── 📂 gpu_processing/
-│   │   └── 📂 spark_launcher/
-│   └── 📂 spark_jobs/              # Spark processing scripts
-│       ├── 🐍 rdd_pipeline.py
-│       └── 🐍 dataframe_pipeline.py
-├── 📂 deployment/                   # Infrastructure & deployment
-│   ├── 📂 terraform/
-│   └── 📂 scripts/
-├── 📂 examples/                     # Usage examples & demos
-│   ├── 🐍 demo_usage.py
-│   └── 📊 performance_analysis.png
-├── 📂 tests/                        # Test suite
-├── 📂 scripts/                      # Utility scripts
-│   ├── 🐍 quick_test.py
-│   ├── 🐍 simple_logs.py
-│   └── 🐍 generate_report.py
-└── 📂 docs/                         # Additional documentation
+bigdata-serverless/
+├── README.md                     # This file
+├── requirements.txt              # Python dependencies
+├── src/
+│   ├── actors/                   # Actor system (Thespian)
+│   │   ├── base_actor.py
+│   │   ├── validation_actor.py
+│   │   ├── job_manager_actor.py
+│   │   └── analysis_actor.py
+│   ├── lambda_functions/         # AWS Lambda functions
+│   │   ├── orchestrator/
+│   │   ├── gpu_processing/
+│   │   └── spark_launcher/
+│   └── spark_jobs/              # Spark processing scripts
+│       ├── rdd_pipeline.py
+│       └── dataframe_pipeline.py
+├── deployment/                   # Infrastructure & deployment
+│   ├── terraform/
+│   └── scripts/
+├── examples/                     # Usage examples & demos
+│   ├── demo_usage.py
+│   └── performance_analysis.png
+├── tests/                        # Test suite
+├── scripts/                      # Utility scripts
+│   ├── quick_test.py
+│   ├── simple_logs.py
+│   └── generate_report.py
+└── docs/                         # Additional documentation
 ```
 
 ## 🧪 Testing
@@ -320,27 +324,27 @@ python tests/test_components.py
 
 ### Demonstrated Competencies
 
-#### **Parallel Programming** 🔄
+#### Parallel Programming 🔄
 - GPU processing with CUDA/OpenMP simulation
 - Multi-threading and vectorization techniques
 - Parallel algorithm optimization
 
-#### **Distributed Systems** 🌐
+#### Distributed Systems 🌐
 - Actor model implementation (Thespian)
 - Microservices architecture
 - Asynchronous communication patterns
 
-#### **Big Data Processing** 📊
+#### Big Data Processing 📊
 - Apache Spark (RDD and DataFrame APIs)
 - Performance analysis and optimization
 - Horizontal scalability patterns
 
-#### **Cloud Computing** ☁️
+#### Cloud Computing ☁️
 - AWS Lambda serverless architecture
 - Auto-scaling and elasticity
 - Cost optimization strategies
 
-#### **DevOps & Infrastructure** 🛠️
+#### DevOps & Infrastructure 🛠️
 - Infrastructure as Code (Terraform)
 - Automated deployment pipelines
 - Monitoring and observability
@@ -372,17 +376,6 @@ python tests/test_components.py
 - [ ] **Performance Tuning**: Continuous optimization
 - [ ] **Cost Optimization**: Advanced cost analysis and recommendations
 
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
-### Development Setup
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests for new functionality
-5. Submit a pull request
-
 ## 📄 License
 
 This project is developed for academic purposes as part of the **"PARALLEL AND DISTRIBUTED PROGRAMMING"** course.
@@ -391,12 +384,12 @@ This project is developed for academic purposes as part of the **"PARALLEL AND D
 
 **Built with ❤️ for Big Data and Serverless Computing**
 
-![Architecture](examples/performance_analysis.png)
-
 ---
 
+*This project demonstrates advanced concepts in parallel computing, distributed systems, and cloud architecture through a practical Big Data processing implementation.*
 
 *Proyecto desarrollado con ❤️ para demostrar competencias avanzadas en programación paralela y distribuida.*
 #   A c t i v i d a d _ I n t e g r a d o r a 
  
  
+
