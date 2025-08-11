@@ -1,0 +1,89 @@
+{
+  "project": {
+    "name": "Big-Data Processing Serverless",
+    "version": "1.0.0",
+    "description": "Aplicación híbrida de procesamiento Big-Data en entorno serverless",
+    "author": "Estudiante de Programación Paralela y Distribuida",
+    "university": "Universidad",
+    "year": 2024
+  },
+  "aws": {
+    "region": "us-east-1",
+    "s3_bucket": "bigdata-processing-results",
+    "lambda_functions": {
+      "orchestrator": {
+        "name": "bigdata-orchestrator",
+        "timeout": 900,
+        "memory": 1024,
+        "runtime": "python3.9"
+      },
+      "gpu_processing": {
+        "name": "gpu-processing-lambda",
+        "timeout": 300,
+        "memory": 2048,
+        "runtime": "python3.9"
+      },
+      "spark_launcher": {
+        "name": "spark-launcher-lambda",
+        "timeout": 900,
+        "memory": 1024,
+        "runtime": "python3.9"
+      }
+    },
+    "emr": {
+      "cluster_name": "bigdata-processing-cluster",
+      "release_label": "emr-6.15.0",
+      "instance_type": "m5.xlarge",
+      "core_instances": 2,
+      "applications": ["Spark", "Hadoop", "Hive"]
+    }
+  },
+  "processing": {
+    "max_data_size": 1000000,
+    "supported_pipeline_types": ["rdd", "dataframe"],
+    "gpu": {
+      "enabled": true,
+      "fallback_to_cpu": true,
+      "memory_pool_size": "512MB"
+    },
+    "spark": {
+      "default_executor_instances": 2,
+      "default_executor_memory": "2g",
+      "max_executor_instances": 10
+    }
+  },
+  "monitoring": {
+    "log_retention_days": 14,
+    "metrics": {
+      "enabled": true,
+      "collection_interval": 60
+    },
+    "alerts": {
+      "error_rate_threshold": 5.0,
+      "latency_threshold": 300,
+      "cost_threshold": 10.0
+    }
+  },
+  "api": {
+    "rate_limit": {
+      "requests_per_second": 10,
+      "burst_limit": 20
+    },
+    "cors": {
+      "allowed_origins": ["*"],
+      "allowed_methods": ["POST", "OPTIONS"],
+      "allowed_headers": ["Content-Type"]
+    }
+  },
+  "testing": {
+    "test_data_sizes": [1000, 5000, 10000, 50000, 100000],
+    "benchmark_iterations": 3,
+    "timeout_seconds": 600
+  },
+  "documentation": {
+    "architecture_diagram": "docs/architecture.md",
+    "performance_analysis": "docs/performance_analysis.md",
+    "deployment_guide": "docs/deployment_guide.md",
+    "api_documentation": "docs/api.md"
+  }
+}

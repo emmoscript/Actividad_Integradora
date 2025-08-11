@@ -1,0 +1,50 @@
+# Core dependencies
+boto3>=1.26.0
+botocore>=1.29.0
+
+# AWS Lambda dependencies
+aws-lambda-powertools>=2.15.0
+
+# Actor system (Akka equivalent for Python)
+thespian>=3.10.0
+
+# GPU processing
+numpy>=1.24.0
+cupy-cuda11x>=12.0.0  # CUDA support
+numba>=0.57.0  # JIT compilation for GPU
+
+# Spark dependencies
+pyspark>=3.4.0
+delta-spark>=2.4.0
+
+# HTTP and API
+fastapi>=0.100.0
+uvicorn>=0.22.0
+requests>=2.31.0
+
+# Data processing
+pandas>=2.0.0
+pyarrow>=12.0.0
+
+# Monitoring and logging
+structlog>=23.1.0
+prometheus-client>=0.17.0
+
+# Testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+moto>=4.2.0
+
+# Development tools
+black>=23.7.0
+flake8>=6.0.0
+mypy>=1.5.0
+
+# Infrastructure
+terraform>=1.5.0
+aws-cdk-lib>=2.80.0
+
+# Utilities
+python-dotenv>=1.0.0
+click>=8.1.0
+rich>=13.4.0
